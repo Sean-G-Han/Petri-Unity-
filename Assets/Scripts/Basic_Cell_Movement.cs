@@ -10,6 +10,7 @@ public class Basic_Cell_Movement : MonoBehaviour
     [SerializeField] private float _updateInterval = 0.1f; // Time interval in seconds
     [SerializeField] private LayerMask _apple; // To filter the objects hit by the ray
     private Rigidbody2D _rb;
+    private SpriteRenderer _sprite;
     Vector2[] _directionVectors = new Vector2[16];
     private Vector2 _moveVector;
     private Vector2 _perlinInitPos;
@@ -19,9 +20,11 @@ public class Basic_Cell_Movement : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _sprite = GetComponent<SpriteRenderer>();
         _moveVector = Vector2.zero;
         _perlinInitPos = new Vector2(Random.value * 10000, Random.value * 10000);
         _timeSinceLastUpdate = 0f;
+        _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
     }
     private void FixedUpdate()
@@ -35,6 +38,8 @@ public class Basic_Cell_Movement : MonoBehaviour
             _moveVector = Decision_vector();
             Move(_moveVector);
         }
+
+        _sprite.flipX = _moveVector.x < 0f;
     }
 
     private Vector2 Decision_vector()
@@ -67,7 +72,7 @@ public class Basic_Cell_Movement : MonoBehaviour
             if (_directionVectors[i].magnitude > maxVector.magnitude)
                 maxVector = _directionVectors[i];
         }
-        Debug.DrawRay(_rb.position, maxVector.normalized * 3, Color.blue);
+        Debug.DrawRay(_rb.position, maxVector.normalized * 5, Color.white);
         return maxVector;
     }
     private void Reset_direction_vectors()
