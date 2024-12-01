@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.Rendering.DebugUI;
 
 public class Basic_Cell_Movement : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class Basic_Cell_Movement : MonoBehaviour
     [SerializeField] private float _maxSpeed = 7f;
     [SerializeField] private float _acceleration = 70f;
     [SerializeField] private float _updateInterval = 0.1f; // Time interval in seconds
-    [SerializeField] private LayerMask _apple; // To filter the objects hit by the ray
+    [SerializeField] private LayerMask _rayLayerMask; // To filter the objects hit by the ray
     private Rigidbody2D _rb;
     private SpriteRenderer _sprite;
     Vector2[] _directionVectors = new Vector2[16];
@@ -49,30 +50,25 @@ public class Basic_Cell_Movement : MonoBehaviour
         Reset_direction_vectors();
         Vector2 maxVector = Vector2.zero;
         Vector2 idleVector = Idle_vector(_perlinInitPos);
+        Vector2 wallVector = Wall_vector();
         for (int i = 0; i < 16; i++)
         {         
             float idleMultiplier = Vector2.Dot(idleVector, _directionVectors[i]);
-            float stdMultiplier = 1f;
-            if (Physics2D.Raycast(_rb.position, _directionVectors[i], 3, _apple)) //Wall Detection
-            {
-                //If Wall deteted, draw (DEBUGGING purposes)
-                Debug.DrawRay(_rb.position, _directionVectors[i] * 3, Color.red);
-                stdMultiplier = 0f;
-                //Set neighbours to 0 too
-                if (i < 15) _directionVectors[i + 1] *= 0;
-                else _directionVectors[0] *= 0;
-                if (i > 0) _directionVectors[i - 1] *= 0;
-                else _directionVectors[15] *= 0;
-            }
+            float wallMultiplier;
+            if (wallVector.magnitude < 0.05f)
+                wallMultiplier = 1f;
+            else
+                wallMultiplier = Vector2.Dot(wallVector, _directionVectors[i]);
+
             //Only if wall not detected, then calculate desire.
-            _directionVectors[i] = (_directionVectors[i] + _directionVectors[i] * idleMultiplier / 100) * stdMultiplier;
+            _directionVectors[i] = (_directionVectors[i] + _directionVectors[i] * idleMultiplier / 2) * wallMultiplier;
         }
         for (int i = 0; i < 16 ; i++)
         {
+            Debug.DrawRay(_rb.position, _directionVectors[i] * 3, Color.green, _updateInterval * 1.1f);
             if (_directionVectors[i].magnitude > maxVector.magnitude)
                 maxVector = _directionVectors[i];
         }
-        Debug.DrawRay(_rb.position, maxVector.normalized * 5, Color.white);
         return maxVector;
     }
     private void Reset_direction_vectors()
@@ -97,6 +93,21 @@ public class Basic_Cell_Movement : MonoBehaviour
         _moveVector = _moveVector.normalized;
         // creates tendency to move in the same direction
         return (_moveVector + _currentDir * 2).normalized;
+    }
+
+    private Vector2 Wall_vector()
+    {
+        Vector2 sumVector = Vector2.zero;
+        for (int i = 0; i < 16; i++)
+        {
+            Vector2 tempVector = _directionVectors[i];
+            if (Physics2D.Raycast(_rb.position, tempVector, 3, _rayLayerMask)) //Wall Detection
+            {
+                tempVector *= 0;
+            }
+            sumVector += tempVector;
+        }
+        return sumVector;
     }
     private void Move(Vector2 _move_vector)
     {

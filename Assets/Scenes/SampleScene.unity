@@ -531,6 +531,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cell
       objectReference: {fileID: 0}
+    - target: {fileID: 5142750154851004265, guid: e7245323fb627674caa90c450e555333, type: 3}
+      propertyPath: _rayLayerMask.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8869149299722971126, guid: e7245323fb627674caa90c450e555333, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
