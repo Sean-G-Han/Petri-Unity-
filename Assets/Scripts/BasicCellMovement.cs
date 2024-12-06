@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public class BasicCellMovement : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class BasicCellMovement : MonoBehaviour
     private DetectionCircle detectionCircle;
     Custom.VectorPolar[] _directionVectors = new Custom.VectorPolar[16];
     private Vector2 _moveVector;
+    private Vector2 _bounceVector;
     private Vector2 _perlinInitPos;
     private float _perlinOffset = 0f;
     private float _timeSinceLastUpdate;
@@ -61,25 +64,25 @@ public class BasicCellMovement : MonoBehaviour
         ResetDirectionVectors();
         Vector2 maxVector = Vector2.zero;
         Vector2 idleVector = IdleVector(_perlinInitPos);
-        Vector2 wallVector = WallVector();
         Vector2 preyVector = PreyVector();
         Vector2 predVector = PredVector();
         for (int i = 0; i < 16; i++)
         {         
             float idleDesire = Custom.Dot(idleVector, _directionVectors[i].Direction);
-            float wallDesire = Custom.Dot(wallVector, _directionVectors[i].Direction);
             float preyDesire = Custom.Dot(preyVector, _directionVectors[i].Direction);
             float predDesire = Custom.Dot(predVector, _directionVectors[i].Direction);
+            float bounce = Custom.Dot(_bounceVector, _directionVectors[i].Direction);
 
-            _directionVectors[i].SetMagnitude(idleDesire + preyDesire * 3 - predDesire * 5 + wallDesire * 10);
+            _directionVectors[i].SetMagnitude(idleDesire * 0.2f + preyDesire * 3 + predDesire * 5 + bounce * 20);
         }
         for (int i = 0; i < 16 ; i++)
         {
             Vector2 temp = _directionVectors[i].Direction * _directionVectors[i].Magnitude;
             Debug.DrawRay(_rb.position, temp, Color.green, _updateInterval * 1.1f);
-            if (_directionVectors[i].Magnitude > maxVector.magnitude)
+            if (temp.magnitude > maxVector.magnitude)
                 maxVector = temp;
         }
+        Debug.DrawRay(_rb.position, maxVector * 10, Color.blue, _updateInterval * 1.1f);
         return maxVector.normalized;
     }
     private void CreateDirectionVectors()
@@ -106,33 +109,14 @@ public class BasicCellMovement : MonoBehaviour
         //Generates random smooth vector for idle
         Vector2 _currentDir = _rb.linearVelocity.normalized;
         Vector2 _moveVector = Vector2.zero;
-        _perlinOffset += 0.1f;
+        _perlinOffset += 0.02f;
         _moveVector.x = Mathf.PerlinNoise(_perlinOffset, _perlin_init_pos.x) - 0.47f;
         _moveVector.y = Mathf.PerlinNoise(_perlinOffset, _perlin_init_pos.y) - 0.47f;
-        _moveVector = (_moveVector.normalized + _currentDir * 2).normalized;
+        _moveVector = (_moveVector.normalized + 3 * _currentDir).normalized;
         // creates tendency to move in the same direction
-        Debug.DrawRay(_rb.position, _moveVector * 5, Color.white, _updateInterval * 1.1f);
+        Debug.DrawRay(_rb.position, _moveVector * 0.5f, Color.white, _updateInterval * 1.1f);
         return _moveVector;
     }
-
-    private Vector2 WallVector()
-    {
-        Vector2 sumVector = Vector2.zero;
-        for (int i = 0; i < 16; i++)
-        {
-            Vector2 tempVector = _directionVectors[i].Vector2();
-            if (Physics2D.Raycast(_rb.position, tempVector, 3, _rayLayerMask)) //Wall Detection
-            {
-   
-                tempVector *= 0;
-            }
-            sumVector += tempVector;
-        }
-        if (sumVector.magnitude > 0.05)
-            Debug.DrawRay(_rb.position, sumVector.normalized * 5, Color.white, _updateInterval * 1.1f);
-        return sumVector.normalized;
-    }
-
     private Vector2 PreyVector()
     {
         if (_target != null)
@@ -149,8 +133,7 @@ public class BasicCellMovement : MonoBehaviour
         Vector2 sumVector = Vector2.zero;
         foreach (GameObject predator in _enemy)
         {
-            Debug.Log($"{this.name} is running from {predator.name}");
-            Vector2 predVector = (predator.transform.position - _rb.transform.position).normalized;
+            Vector2 predVector = (_rb.transform.position - predator.transform.position).normalized;
             Debug.DrawRay(_rb.position, predVector, Color.red, _updateInterval * 1.1f);
             sumVector += predVector;
         }
@@ -201,5 +184,22 @@ public class BasicCellMovement : MonoBehaviour
             _enemy.Remove(lostObject);
         }
         Debug.Log($"{this.name} lost {lostObject.name}");
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Loop through all the contact points for the collision
+        foreach (ContactPoint2D contact in collision.contacts)
+        {
+            // Get the collision normal (this is the direction the object collided from)
+            Vector2 collisionNormal = contact.normal;
+
+            _bounceVector += collisionNormal;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        _bounceVector = Vector2.zero;
     }
 }

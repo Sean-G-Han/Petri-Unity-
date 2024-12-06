@@ -1,16 +1,127 @@
 fileFormatVersion: 2
-guid: fe3e233f59225784cada518732461618
+guid: 92db975d8a7a5b8458f4a1a596c95913
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7282886668606283007
-    second: Slime_0
+      213: -5845281139337550542
+    second: Rule Tile Map_0
   - first:
-      213: 4518187702968751635
-    second: Slime_1
+      213: -881651224492286467
+    second: Rule Tile Map_1
   - first:
-      213: 7526866347251117655
-    second: Slime_2
+      213: 5036441237541060827
+    second: Rule Tile Map_2
+  - first:
+      213: 5445696041560539829
+    second: Rule Tile Map_3
+  - first:
+      213: -4676147294065464063
+    second: Rule Tile Map_4
+  - first:
+      213: -6928107948065894573
+    second: Rule Tile Map_5
+  - first:
+      213: 2082171370833286752
+    second: Rule Tile Map_6
+  - first:
+      213: -933526632724641655
+    second: Rule Tile Map_7
+  - first:
+      213: -915606277843628685
+    second: Rule Tile Map_8
+  - first:
+      213: -4981363996948803047
+    second: Rule Tile Map_9
+  - first:
+      213: 3563172320443800479
+    second: Rule Tile Map_10
+  - first:
+      213: 2060337589385377444
+    second: Rule Tile Map_11
+  - first:
+      213: 3504844293727639882
+    second: Rule Tile Map_12
+  - first:
+      213: -5146490876270142884
+    second: Rule Tile Map_13
+  - first:
+      213: 8658329544569354139
+    second: Rule Tile Map_14
+  - first:
+      213: 1371989443715679040
+    second: Rule Tile Map_15
+  - first:
+      213: 1141088122909776268
+    second: Rule Tile Map_16
+  - first:
+      213: 8292926883086535727
+    second: Rule Tile Map_17
+  - first:
+      213: 2573829833240427479
+    second: Rule Tile Map_18
+  - first:
+      213: 4096466027630034040
+    second: Rule Tile Map_19
+  - first:
+      213: 7281454124348314145
+    second: Rule Tile Map_20
+  - first:
+      213: 2111906891725895085
+    second: Rule Tile Map_21
+  - first:
+      213: 657088309598830782
+    second: Rule Tile Map_22
+  - first:
+      213: 5089793315462210242
+    second: Rule Tile Map_23
+  - first:
+      213: -3350973065413729338
+    second: Rule Tile Map_24
+  - first:
+      213: -1248692171991834282
+    second: Rule Tile Map_25
+  - first:
+      213: -5333011540019377037
+    second: Rule Tile Map_26
+  - first:
+      213: -7938610821931914267
+    second: Rule Tile Map_27
+  - first:
+      213: 2122062507688370585
+    second: Rule Tile Map_28
+  - first:
+      213: -4112057207799657633
+    second: Rule Tile Map_29
+  - first:
+      213: 5636422474684805280
+    second: Rule Tile Map_30
+  - first:
+      213: -4455622974075410344
+    second: Rule Tile Map_31
+  - first:
+      213: -3009240104959941067
+    second: Rule Tile Map_32
+  - first:
+      213: 4115712576122930923
+    second: Rule Tile Map_33
+  - first:
+      213: -8384258267430870183
+    second: Rule Tile Map_34
+  - first:
+      213: 3566203426243512757
+    second: Rule Tile Map_35
+  - first:
+      213: 2958796060001659290
+    second: Rule Tile Map_36
+  - first:
+      213: 2101398316539179753
+    second: Rule Tile Map_37
+  - first:
+      213: 3023273908396660039
+    second: Rule Tile Map_38
+  - first:
+      213: 5441710791616851480
+    second: Rule Tile Map_39
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -106,13 +217,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Slime_0
+      name: Rule Tile Map_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 16
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,42 +232,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1036b4a492dfdea90800000000000000
-      internalID: -7282886668606283007
+      spriteID: 235ae7df5c361eea0800000000000000
+      internalID: -5845281139337550542
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_1
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3169df707c3d3be30800000000000000
-      internalID: 4518187702968751635
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Slime_2
+      name: Rule Tile Map_1
       rect:
         serializedVersion: 2
         x: 32
         y: 0
-        width: 16
-        height: 16
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -165,30 +254,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 75eaeb3501dc47860800000000000000
-      internalID: 7526866347251117655
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Slime_3
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b9dab64b103e7bf44934fe92e2d50d6d
-      internalID: -612269564
+      spriteID: dfd595ce1eeb3c3f0800000000000000
+      internalID: -881651224492286467
       vertices: []
       indices: 
       edges: []
@@ -197,7 +264,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: eadf82bbbb1ff164f860aa2a7cca108f
+    spriteID: 24463c9785499c54aac2563c448789a6
     internalID: 0
     vertices: []
     indices: 
@@ -207,10 +274,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Slime_0: -7282886668606283007
-      Slime_1: 4518187702968751635
-      Slime_2: 7526866347251117655
-      Slime_3: -612269564
+      Rule Tile Map_0: -5845281139337550542
+      Rule Tile Map_1: -881651224492286467
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
